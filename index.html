@@ -18,6 +18,9 @@
             }
         }
     </script>
+    <style>
+        :focus-visible { outline: 3px solid #059669; outline-offset: 3px; }
+    </style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased selection:bg-emerald-500 selection:text-white">
 
@@ -39,7 +42,7 @@
                 <div class="hidden sm:flex items-center space-x-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-lg text-sm">
                     <i class="fa-regular fa-clock text-slate-500"></i>
                     <span class="text-xs text-slate-500">Sisa Waktu:</span>
-                    <span id="timer" class="font-mono font-bold text-emerald-600">180:00</span>
+                    <span id="timer" class="font-mono font-bold text-emerald-600" role="timer" aria-live="off">90:00</span>
                     <button onclick="toggleTimer()" id="timer-btn" class="text-xs bg-slate-200 hover:bg-slate-300 text-slate-700 px-1.5 py-0.5 rounded transition ml-1">Pause</button>
                 </div>
                 <!-- User Profile Badge -->
@@ -63,9 +66,9 @@
                 <div class="bg-white rounded-2xl p-4 shadow-xs border border-slate-200 sticky top-24">
                     <div class="flex items-center justify-between mb-3 px-2">
                         <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Kurikulum Modul</span>
-                        <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">5 Bagian</span>
+                        <span class="text-xs bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">7 Bagian</span>
                     </div>
-                    <nav class="space-y-1 text-sm font-medium">
+                    <nav aria-label="Navigasi kurikulum modul" class="space-y-1 text-sm font-medium">
                         <a href="#tujuan" class="flex items-center px-3 py-2.5 rounded-xl text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 transition group">
                             <i class="fa-solid fa-bullseye w-6 text-slate-400 group-hover:text-emerald-600"></i> I. Tujuan Pembelajaran
                         </a>
@@ -157,26 +160,40 @@
                         <span class="bg-emerald-100 text-emerald-700 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm">III</span>
                         <h2 class="text-base font-bold text-slate-900">Prosedur Praktik (Langkah Kerja)</h2>
                     </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+                            <span>Progres langkah praktik</span>
+                            <span id="progress-text">0 dari 5 selesai</span>
+                        </div>
+                        <div id="practice-progress" class="h-2 bg-slate-100 rounded-full overflow-hidden" role="progressbar" aria-label="Progres langkah praktik" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0">
+                            <div id="practice-progress-bar" class="h-full bg-emerald-500 rounded-full transition-all" style="width: 0%"></div>
+                        </div>
+                    </div>
                     <div class="space-y-4 text-sm text-slate-600">
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1">1. Pengaturan Jaringan & Uji Konektivitas Client (10 Menit)</h3>
                             <p>Set IP static <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">192.168.10.10</code> dan DNS <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">192.168.10.1</code>. Uji koneksi dengan perintah <code class="bg-white px-1.5 py-0.5 rounded border font-mono text-xs">ping 192.168.10.1</code> & <code class="bg-white px-1.5 py-0.5 rounded border font-mono text-xs">nslookup labnasional.local</code>.</p>
+                            <label class="mt-3 inline-flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" class="practice-step accent-emerald-600 w-4 h-4" data-step="1"> Tandai selesai</label>
                         </div>
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1">2. Proses Join Domain dari Mesin Client (15 Menit)</h3>
                             <p>Buka <code class="bg-white px-1.5 py-0.5 rounded border">sysdm.cpl</code>, ubah nama komputer menjadi <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">CLI-LAB01</code>, gabungkan ke domain <code class="bg-white px-1.5 py-0.5 rounded border">labnasional.local</code> menggunakan kredensial <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">LABNASIONAL\Administrator</code>.</p>
+                            <label class="mt-3 inline-flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" class="practice-step accent-emerald-600 w-4 h-4" data-step="2"> Tandai selesai</label>
                         </div>
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1">3. Konfigurasi Shared Folder & Permissions di Server (20 Menit)</h3>
                             <p>Buat folder <code class="bg-white px-1.5 py-0.5 rounded border">C:\Data_Siswa</code>, berikan *Share & NTFS Permissions* untuk grup <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">G_Teknisi</code> dengan hak akses Full Control / Modify.</p>
+                            <label class="mt-3 inline-flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" class="practice-step accent-emerald-600 w-4 h-4" data-step="3"> Tandai selesai</label>
                         </div>
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1">4. Konfigurasi Group Policy Object (GPO) (25 Menit)</h3>
                             <p>Buat GPO <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">GPO_Siswa_Policy</code> di OU <code class="bg-white px-1.5 py-0.5 rounded border">TKJ_Users</code> untuk memblokir Control Panel dan melakukan *Mapped Drive Z:* otomatis.</p>
+                            <label class="mt-3 inline-flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" class="practice-step accent-emerald-600 w-4 h-4" data-step="4"> Tandai selesai</label>
                         </div>
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <h3 class="font-bold text-slate-800 mb-1">5. Login User Domain & Pengujian Client (20 Menit)</h3>
                             <p>Login ke client dengan akun <code class="bg-white px-1.5 py-0.5 rounded border text-emerald-600">siswa01</code>, jalankan <code class="bg-white px-1.5 py-0.5 rounded border font-mono text-xs">gpupdate /force</code>, lalu verifikasi pembatasan UI & Drive Z:.</p>
+                            <label class="mt-3 inline-flex items-center gap-2 py-1 cursor-pointer"><input type="checkbox" class="practice-step accent-emerald-600 w-4 h-4" data-step="5"> Tandai selesai</label>
                         </div>
                     </div>
                 </section>
@@ -190,7 +207,7 @@
                         </div>
                         <span class="text-xs bg-slate-800 px-2.5 py-1 rounded text-slate-400 border border-slate-700">CLI-LAB01</span>
                     </div>
-                    <p class="text-xs text-slate-400 mb-4">Klik tombol perintah di bawah untuk mensimulasikan respons jaringan langsung di browser:</p>
+                    <p id="terminal-help" class="text-xs text-slate-400 mb-4">Klik tombol perintah di bawah untuk mensimulasikan respons jaringan langsung di browser:</p>
                     
                     <div class="flex flex-wrap gap-2 mb-4">
                         <button onclick="runCommand('ping')" class="bg-emerald-600 hover:bg-emerald-500 text-xs px-3 py-1.5 rounded-lg font-mono font-medium transition shadow-sm">ping 192.168.10.1</button>
@@ -199,7 +216,7 @@
                         <button onclick="runCommand('clear')" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-1.5 rounded-lg font-mono transition border border-slate-700 text-slate-300">cls (Clear)</button>
                     </div>
 
-                    <div id="terminal-screen" class="bg-black p-4 rounded-xl font-mono text-xs text-emerald-400 h-44 overflow-y-auto border border-slate-800 shadow-inner">
+                    <div id="terminal-screen" role="region" aria-label="Output simulasi terminal" aria-live="polite" aria-describedby="terminal-help" class="bg-black p-4 rounded-xl font-mono text-xs text-emerald-400 h-44 overflow-y-auto border border-slate-800 shadow-inner">
                         Microsoft Windows [Version 10.0.19045.3803]<br>
                         (c) Microsoft Corporation. All rights reserved.<br><br>
                         C:\Users\Administrator&gt; <span class="text-slate-500">Pilih perintah di atas untuk menguji respons terminal...</span>
@@ -212,11 +229,15 @@
                         <span class="bg-amber-100 text-amber-700 w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-note-sticky"></i></span>
                         <h2 class="text-base font-bold text-slate-900">Catatan & Kendala Praktikum Mandiri</h2>
                     </div>
-                    <p class="text-xs text-slate-500 mb-3">Tuliskan hasil pengamatan atau kendala praktikum Anda di bawah ini. Data otomatis tersimpan di memori browser Anda.</p>
+                    <p class="text-xs text-slate-500 mb-3">Tuliskan hasil pengamatan atau kendala praktikum Anda. Catatan disimpan hanya di browser dan perangkat ini.</p>
+                    <label for="user-notes" class="block text-sm font-medium text-slate-700 mb-2">Catatan praktikum</label>
                     <textarea id="user-notes" class="w-full h-32 p-3 text-sm border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Tulis catatan atau temuan error saat join domain di sini..."></textarea>
-                    <div class="flex justify-between items-center mt-3">
-                        <span id="save-status" class="text-xs text-emerald-600 font-semibold"></span>
-                        <button onclick="saveNotes()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-xs transition">Simpan Catatan</button>
+                    <div class="flex flex-wrap justify-between items-center gap-3 mt-3">
+                        <span id="save-status" role="status" aria-live="polite" class="text-xs text-emerald-600 font-semibold"></span>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="clearNotes()" class="border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs font-semibold px-4 py-2 rounded-xl transition">Hapus Catatan</button>
+                            <button type="button" onclick="saveNotes()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-xs transition">Simpan Catatan</button>
+                        </div>
                     </div>
                 </section>
 
@@ -249,34 +270,98 @@
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <p class="font-semibold mb-2 text-slate-900">1. Apa penyebab utama kegagalan saat proses *Join Domain* dengan pesan error "DC could not be contacted"?</p>
                             <div class="space-y-1 pl-2">
-                                <label class="block"><input type="radio" name="q1" value="a" class="mr-2 accent-emerald-600"> A. Kabel LAN rusak atau putus</label>
-                                <label class="block"><input type="radio" name="q1" value="b" class="mr-2 accent-emerald-600"> B. Preferred DNS Client belum mengarah ke IP Domain Controller</label>
-                                <label class="block"><input type="radio" name="q1" value="c" class="mr-2 accent-emerald-600"> C. Kapasitas Harddisk server penuh</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q1" value="a" class="mr-2 accent-emerald-600"> A. Kabel LAN rusak atau putus</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q1" value="b" class="mr-2 accent-emerald-600"> B. Preferred DNS Client belum mengarah ke IP Domain Controller</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q1" value="c" class="mr-2 accent-emerald-600"> C. Kapasitas Harddisk server penuh</label>
                             </div>
                         </div>
 
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <p class="font-semibold mb-2 text-slate-900">2. Aturan hak akses manakah yang berlaku jika *Share Permissions* mengizinkan Full Control tetapi *NTFS Permissions* hanya Read?</p>
                             <div class="space-y-1 pl-2">
-                                <label class="block"><input type="radio" name="q2" value="a" class="mr-2 accent-emerald-600"> A. Full Control (karena Share lebih utama)</label>
-                                <label class="block"><input type="radio" name="q2" value="b" class="mr-2 accent-emerald-600"> B. Read (karena aturan paling ketat/restrictive yang berlaku)</label>
-                                <label class="block"><input type="radio" name="q2" value="c" class="mr-2 accent-emerald-600"> C. Akses ditolak sepenuhnya</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q2" value="a" class="mr-2 accent-emerald-600"> A. Full Control (karena Share lebih utama)</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q2" value="b" class="mr-2 accent-emerald-600"> B. Read (karena aturan paling ketat/restrictive yang berlaku)</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q2" value="c" class="mr-2 accent-emerald-600"> C. Akses ditolak sepenuhnya</label>
                             </div>
                         </div>
 
                         <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
                             <p class="font-semibold mb-2 text-slate-900">3. Di manakah letak konfigurasi Group Policy Object (GPO) untuk menerapkan *Mapped Drive Z:* otomatis pada user domain?</p>
                             <div class="space-y-1 pl-2">
-                                <label class="block"><input type="radio" name="q3" value="a" class="mr-2 accent-emerald-600"> A. Computer Configuration > Policies > Windows Settings</label>
-                                <label class="block"><input type="radio" name="q3" value="b" class="mr-2 accent-emerald-600"> B. User Configuration > Preferences > Windows Settings > Drive Maps</label>
-                                <label class="block"><input type="radio" name="q3" value="c" class="mr-2 accent-emerald-600"> C. Active Directory Users and Computers</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q3" value="a" class="mr-2 accent-emerald-600"> A. Computer Configuration > Policies > Windows Settings</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q3" value="b" class="mr-2 accent-emerald-600"> B. User Configuration > Preferences > Windows Settings > Drive Maps</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q3" value="c" class="mr-2 accent-emerald-600"> C. Active Directory Users and Computers</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">4. Apa fungsi utama DNS pada proses *Join Domain*?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q4" value="a" class="mr-2 accent-emerald-600"> A. Menemukan Domain Controller melalui nama domain</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q4" value="b" class="mr-2 accent-emerald-600"> B. Mengatur resolusi layar client</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q4" value="c" class="mr-2 accent-emerald-600"> C. Membagikan alamat IP secara otomatis</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">5. Berapakah alamat DNS yang harus digunakan CLI-LAB01 sesuai topologi praktikum?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q5" value="a" class="mr-2 accent-emerald-600"> A. 192.168.10.10</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q5" value="b" class="mr-2 accent-emerald-600"> B. 192.168.10.1</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q5" value="c" class="mr-2 accent-emerald-600"> C. 127.0.0.1</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">6. Akun manakah yang digunakan untuk menggabungkan client ke domain?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q6" value="a" class="mr-2 accent-emerald-600"> A. CLI-LAB01\Guest</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q6" value="b" class="mr-2 accent-emerald-600"> B. LABNASIONAL\Administrator</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q6" value="c" class="mr-2 accent-emerald-600"> C. SRV-DC01\siswa01</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">7. Folder apa yang dibuat pada server untuk praktikum Shared Folder?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q7" value="a" class="mr-2 accent-emerald-600"> A. C:\\Data_Siswa</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q7" value="b" class="mr-2 accent-emerald-600"> B. C:\\Windows_Siswa</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q7" value="c" class="mr-2 accent-emerald-600"> C. D:\\Domain_User</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">8. Grup manakah yang diberi hak akses pada Shared Folder?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q8" value="a" class="mr-2 accent-emerald-600"> A. G_Teknisi</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q8" value="b" class="mr-2 accent-emerald-600"> B. Domain Guests</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q8" value="c" class="mr-2 accent-emerald-600"> C. Everyone tanpa pengaturan izin</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">9. Di OU manakah GPO_Siswa_Policy dibuat sesuai prosedur?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q9" value="a" class="mr-2 accent-emerald-600"> A. Domain Controllers</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q9" value="b" class="mr-2 accent-emerald-600"> B. TKJ_Users</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q9" value="c" class="mr-2 accent-emerald-600"> C. Computers</label>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                            <p class="font-semibold mb-2 text-slate-900">10. Apa perintah yang digunakan untuk memperbarui kebijakan Group Policy pada client?</p>
+                            <div class="space-y-1 pl-2">
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q10" value="a" class="mr-2 accent-emerald-600"> A. ipconfig /renew</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q10" value="b" class="mr-2 accent-emerald-600"> B. gpupdate /force</label>
+                                <label class="block py-1.5 cursor-pointer"><input type="radio" name="q10" value="c" class="mr-2 accent-emerald-600"> C. nslookup /flush</label>
                             </div>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                             <button type="button" onclick="checkQuiz()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2.5 rounded-xl shadow-xs transition">Cek Skor Quiz</button>
-                            <span id="quiz-result" class="font-bold text-sm text-emerald-700"></span>
+                            <span id="quiz-result" role="status" aria-live="polite" class="font-bold text-sm text-emerald-700"></span>
                         </div>
+                        <div id="quiz-feedback" class="space-y-2" aria-live="polite"></div>
                     </form>
                 </section>
 
@@ -292,7 +377,7 @@
 
     <!-- JavaScript Interaktif -->
     <script>
-        let totalSeconds = 180 * 60;
+        let totalSeconds = 90 * 60;
         let timerInterval = setInterval(updateTimer, 1000);
         let isPaused = false;
 
@@ -335,30 +420,77 @@
         }
 
         window.onload = function() {
+            document.querySelectorAll('#quiz-form > div.p-4').forEach((card, index) => {
+                const question = card.querySelector('p');
+                question.id = `quiz-question-${index + 1}`;
+                card.setAttribute('role', 'group');
+                card.setAttribute('aria-labelledby', question.id);
+            });
+
             const saved = localStorage.getItem('lms_asj_notes');
             if (saved) {
                 document.getElementById('user-notes').value = saved;
             }
+
+            const savedSteps = (localStorage.getItem('lms_asj_steps') || '').split(',');
+            document.querySelectorAll('.practice-step').forEach((checkbox) => {
+                checkbox.checked = savedSteps.includes(checkbox.dataset.step);
+                checkbox.addEventListener('change', updatePracticeProgress);
+            });
+            updatePracticeProgress();
+        }
+
+        function updatePracticeProgress() {
+            const checkboxes = [...document.querySelectorAll('.practice-step')];
+            const completed = checkboxes.filter((checkbox) => checkbox.checked);
+            document.getElementById('progress-text').innerText = `${completed.length} dari ${checkboxes.length} selesai`;
+            document.getElementById('practice-progress').setAttribute('aria-valuenow', completed.length);
+            document.getElementById('practice-progress-bar').style.width = `${checkboxes.length ? completed.length / checkboxes.length * 100 : 0}%`;
+            localStorage.setItem('lms_asj_steps', completed.map((checkbox) => checkbox.dataset.step).join(','));
         }
 
         function saveNotes() {
             const text = document.getElementById('user-notes').value;
             localStorage.setItem('lms_asj_notes', text);
             const status = document.getElementById('save-status');
-            status.innerText = "✓ Catatan berhasil disimpan ke browser!";
+            status.innerText = "✓ Catatan berhasil disimpan di browser ini.";
             setTimeout(() => { status.innerText = ""; }, 3000);
         }
 
+        function clearNotes() {
+            if (!confirm('Yakin ingin menghapus semua catatan praktikum?')) return;
+            document.getElementById('user-notes').value = '';
+            localStorage.removeItem('lms_asj_notes');
+            document.getElementById('save-status').innerText = 'Catatan berhasil dihapus.';
+        }
+
         function checkQuiz() {
-            const answers = { q1: 'b', q2: 'b', q3: 'b' };
+            const questions = [
+                { id: 'q1', answer: 'b', explanation: 'DNS client harus mengarah ke Domain Controller agar dapat menemukan layanan domain.' },
+                { id: 'q2', answer: 'b', explanation: 'Akses melalui jaringan mengikuti izin yang paling membatasi antara Share dan NTFS.' },
+                { id: 'q3', answer: 'b', explanation: 'Drive Maps berada di User Configuration > Preferences > Windows Settings.' },
+                { id: 'q4', answer: 'a', explanation: 'DNS membantu client menemukan Domain Controller melalui nama domain dan record layanan.' },
+                { id: 'q5', answer: 'b', explanation: 'DNS client CLI-LAB01 diarahkan ke 192.168.10.1, yaitu alamat Domain Controller.' },
+                { id: 'q6', answer: 'b', explanation: 'Kredensial LABNASIONAL\\Administrator digunakan untuk proses join domain pada modul ini.' },
+                { id: 'q7', answer: 'a', explanation: 'Folder praktikum Shared Folder dibuat di C:\\Data_Siswa.' },
+                { id: 'q8', answer: 'a', explanation: 'Grup G_Teknisi diberi izin akses sesuai prosedur praktikum.' },
+                { id: 'q9', answer: 'b', explanation: 'GPO_Siswa_Policy dibuat dan ditautkan pada OU TKJ_Users.' },
+                { id: 'q10', answer: 'b', explanation: 'Perintah gpupdate /force meminta client memperbarui kebijakan Group Policy.' }
+            ];
             let score = 0;
-            let total = 3;
-            for (let key in answers) {
-                const selected = document.querySelector(`input[name="${key}"]:checked`);
-                if (selected && selected.value === answers[key]) score++;
-            }
-            const resultElement = document.getElementById('quiz-result');
-            resultElement.innerText = `Skor Anda: ${score} / ${total} benar! ` + (score === 3 ? '🎉 Luar Biasa, Kompeten!' : '💪 Periksa kembali modul materi.');
+            const feedback = [];
+
+            questions.forEach((question, index) => {
+                const selected = document.querySelector(`input[name="${question.id}"]:checked`);
+                const correct = selected && selected.value === question.answer;
+                if (correct) score++;
+                const answerLabel = document.querySelector(`input[name="${question.id}"][value="${question.answer}"]`).parentElement.textContent.trim();
+                feedback.push(`<p class="p-3 rounded-lg ${correct ? 'bg-emerald-50 text-emerald-800' : 'bg-amber-50 text-amber-900'}"><strong>Soal ${index + 1}:</strong> ${correct ? 'Benar.' : `Belum tepat${selected ? '.' : ' (belum dijawab).'}`} Jawaban: ${answerLabel}. ${question.explanation}</p>`);
+            });
+
+            const passed = score >= 8;
+            document.getElementById('quiz-result').innerText = `Skor Anda: ${score} / ${questions.length} benar. ${passed ? '🎉 Kompeten! (batas lulus 8/10)' : '💪 Belum lulus; pelajari kembali pembahasan di bawah.'}`;
+            document.getElementById('quiz-feedback').innerHTML = feedback.join('');
         }
     </script>
 </body>
